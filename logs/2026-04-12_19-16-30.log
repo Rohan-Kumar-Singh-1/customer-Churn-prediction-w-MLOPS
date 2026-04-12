@@ -1,0 +1,11 @@
+2026-04-12 19:16:33,291 - INFO - Pipeline started
+2026-04-12 19:16:33,291 - INFO - Starting data ingestion
+2026-04-12 19:16:33,340 - INFO - Data ingestion completed
+2026-04-12 19:16:33,341 - INFO - Data transformation started
+2026-04-12 19:16:33,395 - INFO - Data transformation completed
+2026-04-12 19:16:33,395 - INFO - Model training started
+2026-04-12 19:16:33,398 - INFO - Training samples: (5634, 45)
+2026-04-12 19:16:33,398 - INFO - Testing samples: (1409, 45)
+2026-04-12 19:16:42,093 - INFO - Test Accuracy: 0.8119233498935415
+2026-04-12 19:16:42,129 - INFO - Model training completed and saved
+2026-04-12 19:16:42,129 - INFO - Pipeline completed

@@ -1,0 +1,20 @@
+artifact_path: /home/rohan/workspace/MLOPS churn/mlruns/1/models/m-01f41c4bf7a04abfa7ed253612bebde2/artifacts
+flavors:
+  keras:
+    data: data
+    keras_backend: tensorflow
+    keras_version: 3.12.1
+    save_exported_model: false
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.keras
+    python_version: 3.10.20
+mlflow_version: 3.11.1
+model_id: m-01f41c4bf7a04abfa7ed253612bebde2
+model_size_bytes: 54151
+model_uuid: m-01f41c4bf7a04abfa7ed253612bebde2
+prompts: null
+run_id: 346a615902f146369a1c51d65aee5ae4
+utc_time_created: '2026-04-12 19:46:49.751001'
