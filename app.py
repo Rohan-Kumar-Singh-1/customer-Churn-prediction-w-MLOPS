@@ -7,11 +7,21 @@ import numpy as np
 import pandas as pd
 import joblib
 from tensorflow.keras.models import load_model
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-from fastapi.middleware.cors import CORSMiddleware
+# -------------------------------
+#  Static Frontend (SAFE)
+# -------------------------------
+if os.path.exists("frontend/dist"):
+    app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
 
+# -------------------------------
+#  CORS
+# -------------------------------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,6 +29,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 # -------------------------------
 #  Environment-based loading
 # -------------------------------
@@ -32,14 +43,13 @@ else:
         model = load_model("artifacts/model.keras")
         preprocessor = joblib.load("artifacts/preprocessor.pkl")
     except Exception as e:
-        # Fail fast in production if model is missing
         raise RuntimeError(f"Model or preprocessor failed to load: {e}")
 
 # -------------------------------
-#  Thresholds (EXPLICIT DESIGN)
+#  Thresholds
 # -------------------------------
-THRESHOLD = 0.6          # Final classification threshold
-RISK_THRESHOLD = 0.5     # Early warning threshold
+THRESHOLD = 0.6
+RISK_THRESHOLD = 0.5
 
 # -------------------------------
 #  Input Schema
@@ -66,10 +76,12 @@ class ChurnInput(BaseModel):
     TotalCharges: float
 
 # -------------------------------
-#  Health Check
+#  Root (Serve UI if exists)
 # -------------------------------
 @app.get("/")
-def home():
+def root():
+    if os.path.exists("frontend/dist/index.html"):
+        return FileResponse("frontend/dist/index.html")
     return {"message": "Churn Prediction API is running 🚀"}
 
 # -------------------------------
@@ -78,10 +90,8 @@ def home():
 @app.post("/predict")
 def predict(data: ChurnInput):
 
-    # Convert input → DataFrame
     df = pd.DataFrame([data.model_dump()])
 
-    # CI mode → return mock response
     if IS_CI:
         return {
             "probability": 0.5,
@@ -90,30 +100,33 @@ def predict(data: ChurnInput):
             "risk_level": "Low Risk"
         }
 
-    # Safety check (production)
     if model is None or preprocessor is None:
         raise RuntimeError("Model or preprocessor not loaded properly")
 
-    # Preprocess input
     X = preprocessor.transform(df)
 
-    # Model prediction
-    prob = model.predict(X)[0][0]
+    # ✅ SAFE prediction
+    prob = float(model.predict(X)[0][0])
 
-    # -------------------------------
-    #  Decision Logic
-    # -------------------------------
+    # ✅ NaN protection
+    if np.isnan(prob):
+        prob = 0.0
+
     prediction = int(prob > THRESHOLD)
-
-    # Early warning system (intentional design)
     risk = "High Risk" if prob > RISK_THRESHOLD else "Low Risk"
 
-    # -------------------------------
-    #  Response
-    # -------------------------------
     return {
-        "probability": float(prob),
+        "probability": prob,
         "prediction": prediction,
         "label": "Churn" if prediction == 1 else "No Churn",
         "risk_level": risk
     }
+
+# -------------------------------
+#  React Router Support (VERY IMPORTANT)
+# -------------------------------
+@app.get("/{full_path:path}")
+def serve_frontend(full_path: str):
+    if os.path.exists("frontend/dist/index.html"):
+        return FileResponse("frontend/dist/index.html")
+    return {"error": "Frontend not built"}

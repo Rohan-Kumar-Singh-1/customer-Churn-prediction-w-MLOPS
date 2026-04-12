@@ -1,2 +1,5 @@
+logs/
+mlruns/
 __pycache__/
 *.pyc
+MLOps/

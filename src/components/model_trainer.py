@@ -20,7 +20,7 @@ class ModelTrainer:
     def __init__(self):
         self.model_path = "artifacts/model.keras"
 
-    def initiate_model_training(self, X, y):
+    def initiate_model_training(self, X_train, X_test, y_train, y_test):
         logging.info("Model training started")
 
         try:
