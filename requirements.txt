@@ -5,3 +5,5 @@ tensorflow
 joblib
 mlflow
 dvc
+fastapi
+uvicorn

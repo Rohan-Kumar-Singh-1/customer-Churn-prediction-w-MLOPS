@@ -1,6 +1,0 @@
-2026-04-12 19:11:01,786 - INFO - Pipeline started
-2026-04-12 19:11:01,786 - INFO - Starting data ingestion
-2026-04-12 19:11:01,840 - INFO - Data ingestion completed
-2026-04-12 19:11:01,840 - INFO - Data transformation started
-2026-04-12 19:11:01,894 - INFO - Data transformation completed
-2026-04-12 19:11:01,895 - INFO - Model training started
