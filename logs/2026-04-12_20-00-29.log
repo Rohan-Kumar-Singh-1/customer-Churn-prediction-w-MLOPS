@@ -1,0 +1,10 @@
+2026-04-12 20:00:34,816 - INFO - Pipeline started
+2026-04-12 20:00:34,816 - INFO - Starting data ingestion
+2026-04-12 20:00:34,883 - INFO - Data ingestion completed
+2026-04-12 20:00:34,884 - INFO - Data transformation started
+2026-04-12 20:00:34,965 - INFO - Data transformation completed
+2026-04-12 20:00:34,966 - INFO - Model training started
+2026-04-12 20:00:36,020 - INFO - MLflow run started
+2026-04-12 20:00:48,826 - INFO - Test Accuracy: 0.8140525195173882
+2026-04-12 20:00:57,544 - INFO - Model training completed
+2026-04-12 20:00:57,554 - INFO - Pipeline completed

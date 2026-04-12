@@ -1,0 +1,23 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python main.py
+    deps:
+    - path: data/churn.csv
+      hash: md5
+      md5: 8cac3095fcf1fdc5d276164ba877e721
+      size: 971241
+    - path: src/
+      hash: md5
+      md5: 2fe915af988462f18c59a4f5159a1ac3.dir
+      size: 17656
+      nfiles: 24
+    outs:
+    - path: artifacts/model.keras
+      hash: md5
+      md5: c84d1f470d5ae4532f14739aca4f5408
+      size: 54146
+    - path: artifacts/preprocessor.pkl
+      hash: md5
+      md5: 4659b9111003add0b8c5b8253896e1fc
+      size: 7462

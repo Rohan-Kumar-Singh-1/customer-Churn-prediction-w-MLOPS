@@ -1,0 +1,9 @@
+stages:
+  train:
+    cmd: python main.py
+    deps:
+      - data/churn.csv
+      - src/
+    outs:
+      - artifacts/model.keras
+      - artifacts/preprocessor.pkl
