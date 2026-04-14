@@ -4,17 +4,34 @@ from src.components.model_trainer import ModelTrainer
 
 from src.utils.logger import logging
 
+
 class TrainingPipeline:
     def start(self):
         logging.info("Pipeline started")
 
-        ingestion = DataIngestion()
-        data_path = ingestion.initiate_data_ingestion()
+        try:
+            # -------------------------------
+            # Data Ingestion
+            # -------------------------------
+            ingestion = DataIngestion()
+            data_path = ingestion.initiate_data_ingestion()
 
-        transformation = DataTransformation()
-        X, y = transformation.initiate_data_transformation(data_path)
+            # -------------------------------
+            # Data Transformation (NOW RETURNS SPLIT DATA)
+            # -------------------------------
+            transformation = DataTransformation()
+            X_train, X_test, y_train, y_test = transformation.initiate_data_transformation(data_path)
 
-        trainer = ModelTrainer()
-        trainer.initiate_model_training(X, y)
+            # -------------------------------
+            # Model Training
+            # -------------------------------
+            trainer = ModelTrainer()
+            trainer.initiate_model_training(
+                X_train, X_test, y_train, y_test
+            )
 
-        logging.info("Pipeline completed")
+            logging.info("Pipeline completed successfully")
+
+        except Exception as e:
+            logging.error("Pipeline failed")
+            raise e

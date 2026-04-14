@@ -8,7 +8,6 @@ import tensorflow as tf
 import mlflow
 import mlflow.keras
 
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 from src.utils.logger import logging
@@ -24,11 +23,6 @@ class ModelTrainer:
         logging.info("Model training started")
 
         try:
-            # ✅ Train-test split
-            X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=0.2, random_state=42
-            )
-
             # ✅ Start MLflow experiment
             mlflow.set_experiment("churn-mlops-experiment")
 
@@ -40,11 +34,11 @@ class ModelTrainer:
                 mlflow.log_param("epochs", 10)
                 mlflow.log_param("batch_size", 32)
 
-                # Build model
-                model = build_model(X.shape[1])
+                # ✅ Build model using TRAIN data
+                model = build_model(X_train.shape[1])
 
                 # Train model
-                history = model.fit(
+                model.fit(
                     X_train,
                     y_train,
                     validation_data=(X_test, y_test),
@@ -65,7 +59,7 @@ class ModelTrainer:
                 # Log model
                 mlflow.keras.log_model(model, "model")
 
-                # Save locally also
+                # Save locally
                 os.makedirs("artifacts", exist_ok=True)
                 model.save(self.model_path)
 

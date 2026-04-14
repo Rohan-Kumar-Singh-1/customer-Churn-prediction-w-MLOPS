@@ -1,0 +1,11 @@
+[core]
+    remote = dagshub
+['remote "storage"']
+    url = ../dvc_storage
+['remote "gdrive"']
+    url = gdrive://1bso30aJjcIxYLcFJuWHxmvZ1Q1ZyWqTo
+['remote "dagshub"']
+    url = https://dagshub.com/Rohan-Kumar-Singh-1/customer-Churn-prediction-w-MLOPS.dvc
+    auth = basic
+    user = Rohan-Kumar-Singh-1
+    password = e5535908860631d8800aee595e0a7c991089988c
