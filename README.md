@@ -2,12 +2,6 @@
 
 <h3 align="center">Proactive churn prediction with an MLOps-powered pipeline for robust, scalable, and actionable customer insights.</h3>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="Build Status">
-  <img src="https://img.shields.io/github/license/your-org/customer-Churn-prediction-w-MLOPS.svg?color=blue" alt="License">
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
-  <img src="https://img.shields.io/github/stars/your-org/customer-Churn-prediction-w-MLOPS.svg?style=social" alt="GitHub Stars">
-</p>
 
 ---
 
